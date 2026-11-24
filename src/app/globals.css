@@ -1,26 +1,171 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-background: var(--background);
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --font-heading: var(--font-bricolage), system-ui, sans-serif;
+  --font-display: var(--font-bricolage), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --color-brand: var(--brand);
+  --color-brand-700: var(--brand-700);
+  --color-brand-900: var(--brand-900);
+  --color-brand-50: var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-sky: var(--sky);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-paper: var(--paper);
+  --color-deal: var(--deal);
+  --color-gold: var(--gold);
+  --color-ok: var(--ok);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
+  --animate-marquee-reverse: marquee var(--marquee-duration, 40s) linear infinite reverse;
+  --animate-marquee-y: marquee-y var(--marquee-duration, 40s) linear infinite;
+  --animate-kenburns: kenburns 9s ease-out forwards;
+  --animate-rise: rise .8s cubic-bezier(.2,.7,.2,1) both;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-progress: progress var(--progress-duration, 6s) linear forwards;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes marquee { to { transform: translateX(calc(-50% - var(--marquee-gap, 0px) / 2)); } }
+@keyframes marquee-y { to { transform: translateY(calc(-50% - var(--marquee-gap, 0px) / 2)); } }
+@keyframes kenburns { from { transform: scale(1.12) translate3d(1%, 1%, 0); } to { transform: scale(1) translate3d(0, 0, 0); } }
+@keyframes rise { from { opacity: 0; transform: translateY(28px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes float { 0%, 100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-14px) rotate(1deg); } }
+@keyframes progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+:root {
+  --brand: #166981;
+  --brand-700: #0f5265;
+  --brand-900: #0a3442;
+  --brand-50: #eef7f9;
+  --brand-100: #d8edf2;
+  --sky: #3aa8d0;
+  --ink: #0a1a22;
+  --ink-2: #2a3b44;
+  --paper: #f4f7f6;
+  --deal: #c63d1b;
+  --gold: #f4b324;
+  --ok: #12996a;
+
+  --background: #f4f7f6;
+  --foreground: #0a1a22;
+  --card: #ffffff;
+  --card-foreground: #0a1a22;
+  --popover: #ffffff;
+  --popover-foreground: #0a1a22;
+  --primary: #166981;
+  --primary-foreground: #ffffff;
+  --secondary: #e9f1f2;
+  --secondary-foreground: #0a1a22;
+  --muted: #edf2f2;
+  --muted-foreground: #5b6c74;
+  --accent: #e6f1f3;
+  --accent-foreground: #0a1a22;
+  --destructive: #d9412b;
+  --border: #dfe7e8;
+  --input: #cfdadc;
+  --ring: #3aa8d0;
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  html { @apply font-sans; -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
+  body { @apply bg-background text-foreground antialiased; overflow-x: hidden; font-feature-settings: "ss01"; }
+  h1, h2, h3, h4 { font-family: var(--font-heading); letter-spacing: -0.025em; }
+  ::selection { background: var(--brand); color: #fff; }
+
+  /* Custom scrollbar */
+  html { scrollbar-color: color-mix(in oklab, var(--brand) 55%, white) transparent; scrollbar-width: thin; }
+  ::-webkit-scrollbar { width: 12px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--paper); }
+  ::-webkit-scrollbar-thumb { background: color-mix(in oklab, var(--brand) 55%, white); border-radius: 99px; border: 3px solid var(--paper); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--brand); }
+}
+
+@layer utilities {
+  .num { font-variant-numeric: tabular-nums; }
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .thin-scroll { scrollbar-width: thin; }
+  .thin-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
+  .thin-scroll::-webkit-scrollbar-thumb { border: 0; }
+  .eyebrow { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
+
+  /* Textures: fine engineering grid, dot grid, diagonal hatch, film grain */
+  .tx-grid {
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, currentColor 9%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, currentColor 9%, transparent) 1px, transparent 1px);
+    background-size: 28px 28px;
   }
+  .tx-dots {
+    background-image: radial-gradient(color-mix(in oklab, currentColor 18%, transparent) 1.1px, transparent 1.2px);
+    background-size: 16px 16px;
+  }
+  .tx-hatch {
+    background-image: repeating-linear-gradient(135deg, color-mix(in oklab, currentColor 8%, transparent) 0 1px, transparent 1px 11px);
+  }
+  .tx-grain::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .14; mix-blend-mode: overlay; border-radius: inherit;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .mask-fade-x { mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
+  .mask-fade-y { mask-image: linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent); }
+  .pb-safe { padding-bottom: max(env(safe-area-inset-bottom), 0px); }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Marquees pause while hovered or focused (plain CSS: compound selectors are dropped inside @layer utilities) */
+.pause-on-hover:hover *, .pause-on-hover:focus-within * { animation-play-state: paused !important; }
+
+/* View transitions between routes: app-like cross-fade + slide */
+::view-transition-old(root) { animation: 180ms ease-out both vt-out; }
+::view-transition-new(root) { animation: 280ms cubic-bezier(.2,.7,.2,1) both vt-in; }
+@keyframes vt-out { to { opacity: 0; transform: translateY(-6px); } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(10px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+/* Five-star rating drawn once with a CSS mask instead of five inline SVGs per review. */
+.stars {
+  display: inline-block;
+  width: 5rem;
+  height: 1rem;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.4l-5.9 3.3 1.2-6.6L2.5 9.5l6.6-.9z'/%3E%3C/svg%3E") repeat-x left center / 1rem 1rem;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.4l-5.9 3.3 1.2-6.6L2.5 9.5l6.6-.9z'/%3E%3C/svg%3E") repeat-x left center / 1rem 1rem;
 }

@@ -196,10 +196,10 @@ export default function ProductPage({ base, detail, related }: { base: Product; 
       </div>
 
       {/* Details */}
-      <Tabs defaultValue="overview" className="mt-14 md:mt-20">
-        <TabsList className="no-scrollbar h-12 w-full justify-start overflow-x-auto rounded-full bg-white p-1 ring-1 ring-border md:w-fit">
+      <Tabs defaultValue="overview" className="mt-14 min-w-0 md:mt-20">
+        <TabsList className="no-scrollbar h-12! w-full justify-start overflow-x-auto overflow-y-hidden overscroll-x-contain rounded-full bg-white p-1 ring-1 ring-border md:w-fit">
           {[["overview", "Overview"], ["specs", "Specifications"], ["warranty", "Warranty & delivery"], ["reviews", "Reviews"]].map(([v, l]) => (
-            <TabsTrigger key={v} value={v} className="h-10 shrink-0 rounded-full px-5 font-bold data-active:bg-ink data-active:text-white hover:text-ink data-active:hover:text-white">{l}</TabsTrigger>
+            <TabsTrigger key={v} value={v} className="h-10 shrink-0 flex-none rounded-full px-5 font-bold after:hidden data-active:bg-ink data-active:text-white hover:text-ink data-active:hover:text-white">{l}</TabsTrigger>
           ))}
         </TabsList>
         <TabsContent value="overview" className="mt-6">

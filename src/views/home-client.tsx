@@ -287,8 +287,8 @@ export function ProductBento({ collections, stack, counts, total }: { collection
         title={<>Fresh stock, <span className="text-brand">every week.</span></>}
         action={
           <Tabs value={tab} onValueChange={v => setTab(v as typeof tab)} className="max-w-full min-w-0">
-            <TabsList className="no-scrollbar h-11 max-w-full justify-start overflow-x-auto rounded-full bg-white p-1 ring-1 ring-border">
-              {TABS.map(t => <TabsTrigger key={t.id} value={t.id} className="h-9 flex-none rounded-full px-4 text-[13.5px] font-bold hover:text-ink data-active:bg-ink data-active:text-white data-active:hover:text-white">{t.label}</TabsTrigger>)}
+            <TabsList className="no-scrollbar h-11! max-w-full justify-start overflow-x-auto overflow-y-hidden overscroll-x-contain rounded-full bg-white p-1 ring-1 ring-border">
+              {TABS.map(t => <TabsTrigger key={t.id} value={t.id} className="h-9 flex-none rounded-full px-4 after:hidden text-[13.5px] font-bold hover:text-ink data-active:bg-ink data-active:text-white data-active:hover:text-white">{t.label}</TabsTrigger>)}
             </TabsList>
           </Tabs>
         }

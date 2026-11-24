@@ -24,8 +24,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `${p.model} ${p.cpu.replace("Intel ", "")} ${p.ram} ${p.storage} — ${fmt(p.price)}`,
     description,
     alternates: { canonical: `/product/${slug}` },
-    openGraph: { type: "website", title: p.title, description, url: `/product/${slug}`, images: d.images.slice(0, 1).map(url => ({ url, alt: p.model })) },
-    twitter: { card: "summary_large_image", title: p.title, description, images: d.images.slice(0, 1) },
+    openGraph: { type: "website", siteName: SITE_NAME, locale: "en_PK", title: p.title, description, url: `/product/${slug}` },
+    twitter: { card: "summary_large_image", title: p.title, description },
+    other: {
+      "product:price:amount": String(p.price),
+      "product:price:currency": "PKR",
+      "product:availability": p.inStock ? "in stock" : "out of stock",
+      "product:condition": p.condition === "new" ? "new" : "used",
+      "product:brand": p.brand,
+    },
   }
 }
 

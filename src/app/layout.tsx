@@ -18,8 +18,8 @@ export const metadata: Metadata = {
   keywords: ["laptops Karachi", "used laptops Pakistan", "Dell laptops Pakistan", "HP laptops", "Lenovo ThinkPad", "MacBook Pakistan", "gaming laptops", "Fattani Computers"],
   authors: [{ name: SITE_NAME }],
   alternates: { canonical: "/" },
-  openGraph: { type: "website", siteName: SITE_NAME, locale: "en_PK", url: "/", title: "Fattani Computers — Laptops in Karachi since 1997", description: "New, certified and tested used laptops at wholesale prices. Dell Pakistan partner. Warranty on every laptop.", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Fattani Computers" }] },
-  twitter: { card: "summary_large_image", title: "Fattani Computers — Laptops in Karachi since 1997", description: "New, certified and tested used laptops at wholesale prices.", images: ["/opengraph-image"] },
+  openGraph: { type: "website", siteName: SITE_NAME, locale: "en_PK", url: "/", title: "Fattani Computers — Laptops in Karachi since 1997", description: "New, certified and tested used laptops at wholesale prices. Dell Pakistan partner. Warranty on every laptop." },
+  twitter: { card: "summary_large_image", title: "Fattani Computers — Laptops in Karachi since 1997", description: "New, certified and tested used laptops at wholesale prices." },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
   formatDetection: { telephone: false },
 }

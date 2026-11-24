@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   title: "Laptops for sale in Pakistan — new, certified & used",
   description: "Browse 360+ tested laptops: Dell Latitude, HP EliteBook, Lenovo ThinkPad, MacBook, gaming and Chromebooks. Filter by price, processor, RAM and storage. Warranty included, delivery across Pakistan.",
   alternates: { canonical: "/shop" },
+  openGraph: { type: "website", siteName: "Fattani Computers", locale: "en_PK", url: "/shop", title: "Laptops for sale in Pakistan — Fattani Computers", description: "Browse 360+ tested laptops with warranty. Dell, HP, Lenovo, Apple and gaming. Delivery across Pakistan." },
+  twitter: { card: "summary_large_image", title: "Laptops for sale in Pakistan — Fattani Computers", description: "Browse 360+ tested laptops with warranty. Delivery across Pakistan." },
 }
 
 const list = {

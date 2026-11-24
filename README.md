@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fattani Computers — storefront redesign
 
-## Getting Started
+Redesigned storefront for [Fattani Computers](https://fattanicomputer.com), a Karachi laptop dealer since 1997 and Dell Pakistan partner. Built with Next.js 16 (App Router), React 19, Tailwind CSS v4 and shadcn/ui (Base UI).
 
-First, run the development server:
+## Features
 
-```bash
+- Home: hero slider, deal of the day, bento product grid, services, client marquee, reviews, locations, FAQ
+- Shop with filters, search (Ctrl+K or `/`), product pages, compare, wishlist
+- Cart, checkout, order confirmation with PDF invoice, order tracking
+- App-like mobile layout (bottom tab bar, cart sheet)
+- 363 products pre-rendered as static pages
+
+## Getting started
+
+```powershell
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Production build:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```powershell
+npm run build
+npm start
+```
 
-## Learn More
+## Configuration
 
-To learn more about Next.js, take a look at the following resources:
+| Variable | Purpose | Default |
+|---|---|---|
+| `NEXT_PUBLIC_SITE_URL` | Canonical URL used in metadata, sitemap, robots and JSON-LD | `https://fattanicomputer.com` |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Set it to the live domain before deploying.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project structure
 
-## Deploy on Vercel
+```
+src/app/          Routes, metadata, sitemap.ts, robots.ts, manifest.ts, opengraph-image.tsx
+src/views/        Page-level views (home, shop, product, cart, checkout, ...)
+src/components/   Shared UI, layout (header, mega menu, footer), shadcn components
+src/lib/          Catalog, cart/wishlist store, SEO helpers (seo.ts), site content (site.ts)
+src/data/         Generated catalog JSON (slim list + server-only product details)
+scripts/          split-products.cjs: builds src/data/* from scripts/products.full.json
+public/           Brand logo, client logos, brand SVGs
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To refresh the catalog, replace `scripts/products.full.json` and run `node scripts/split-products.cjs`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## SEO, performance and accessibility
+
+- Metadata API with title template, Open Graph/Twitter cards, canonical URLs and generated OG image
+- JSON-LD: store and website (with search action), Product (offers, shipping, returns), FAQ, BreadcrumbList, ItemList
+- Sitemap and robots; cart, checkout, order and compare pages are `noindex`
+- Images through `next/image` (AVIF/WebP, explicit sizes), fonts through `next/font`
+- Heavy UI (cart panel, search dialog, compare bar) loaded lazily; server components for static sections
+- Skip link, labelled controls, focus-visible styles, contrast-checked colours
+
+Lighthouse (local production build): SEO 100, best practices 100, accessibility 94–100, desktop performance 95–98. Mobile performance is 95+ on the shop and cart pages, but about 54–75 on the image-heavy home and product pages (LCP about 5 s under simulated throttling). Measure on real devices after deploy.
+
+## Deployment
+
+Any Next.js host works; Vercel is the simplest. Connect the repository (or run `npx vercel --prod`) and set `NEXT_PUBLIC_SITE_URL`. On Windows, the Vercel CLI needs symlink permission (Developer Mode or an elevated terminal).
+
+## Notes
+
+- Next.js 16 has breaking changes from older versions; docs ship in `node_modules/next/dist/docs/`.
+- Client-module exports cannot be called from server components, so shared helpers such as `waLink` live in `src/lib/site.ts`.
+- Cart, wishlist, compare and orders are stored in the browser (localStorage/sessionStorage); there is no backend yet.
